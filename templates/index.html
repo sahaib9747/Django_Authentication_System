@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Document</title>
+    <style>
+        .forms{
+            width: 500px;
+            margin: 100px auto;
+            display: none;
+        }
+        .nav-item{
+            margin-left: 10px;
+        }
+    </style>
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-light">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a href="#" onclick="reg('block')" class="nav-link">Registration</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" onclick="login('block')" class="nav-link">Login </a>
+            </li>
+            <li class="nav-item">
+                <a href="" class="nav-link"></a>
+            </li>
+        </ul>
+    </nav>
+    <form action="" method="POST" id='reg-form' class="bg-light forms">
+        {% csrf_token %}
+        <label for="username">Username: </label>
+        <input type="text" class="form-control" name="username" id="username" placeholder="type your user name..">
+
+        <label for="first-name">First Name </label>
+        <input type="text" class="form-control" name="first-name" id="first-name" placeholder="type your user name..">
+        
+        <label for="last-name">Last Name: </label>
+        <input type="text" class="form-control" name="last-name" id="last-name" placeholder="type your user name..">
+
+        <label for="password">Password: </label>
+        <input type="password" class="form-control" name="password" id="password" placeholder="type your user name..">
+
+        <label for="password">Confirm Password: </label>
+        <input type="password" class="form-control" name="password" id="password" placeholder="type your user name..">
+
+        <input type="submit" class="btn btn-md btn-primary btn-block mt-3" name="submit" id="submit" value="Submit">
+    </form>
+
+
+
+    <form action="" method="POST" id='login-form' class="forms bg-light">
+        {% csrf_token %}
+        <label for="username">Username: </label>
+        <input type="text" class="form-control" name="username" id="username" placeholder="type your user name..">
+        
+        <label for="password">Password: </label>
+        <input type="password" class="form-control" name="password" id="password" placeholder="type your user name..">
+        
+        <input type="submit" class="btn btn-md btn-primary btn-block mt-3" name="submit" id="login-submit" value="login">
+    </form>
+
+    <script type="text/javascript">
+        function reg(val){
+            let login = document.getElementById('login-form').style.display='none';
+
+            var post = document.getElementById('reg-form').style.display = val;
+        }
+
+        function login(val){
+            let reg = document.getElementById('reg-form').style.display='none';
+            var post = document.getElementById('login-form').style.display = val;
+        }
+        
+
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
