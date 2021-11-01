@@ -9,7 +9,7 @@
     <style>
         .forms{
             width: 500px;
-            margin: 100px auto;
+            margin: 30px auto;
             display: none;
         }
         .nav-item{
@@ -19,22 +19,43 @@
 
 </head>
 <body>
-
     <nav class="navbar navbar-expand-lg bg-light">
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <a href="#" onclick="reg('block')" class="nav-link">Registration</a>
-            </li>
-            <li class="nav-item">
-                <a href="#" onclick="login('block')" class="nav-link">Login </a>
-            </li>
-            <li class="nav-item">
-                <a href="" class="nav-link"></a>
-            </li>
+            {% if not user.is_authenticated %}
+                <li class="nav-item">
+                    <a href="#" onclick="reg('block')" class="nav-link">Registration</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" onclick="login('block')" class="nav-link">Login </a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <form method="POST" action="/accounts/">
+                        {% csrf_token %}
+                        <button type="submit" name="logout-submit" class="btn btn-primary btn-block">log out</button>
+                    </form>
+                </li>
+            {% endif %}
         </ul>
     </nav>
-    <form action="" method="POST" id='reg-form' class="bg-light forms">
+    <div class="jumbotron text-center">
+        <h1>Welcome to Django Authentication system</h1>
+    </div>
+    <form action="/accounts/" method="POST" id='reg-form' class="bg-light forms">
         {% csrf_token %}
+        <div class="error">
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+                        <p class="text-info text-center">{{message}}</p>
+                        <script type="text/javascript">
+                            document.getElementById('reg-form').style.display='block';
+                        </script>
+                       
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
         <label for="username">Username: </label>
         <input type="text" class="form-control" name="username" id="username" placeholder="type your user name..">
 
@@ -43,28 +64,55 @@
         
         <label for="last-name">Last Name: </label>
         <input type="text" class="form-control" name="last-name" id="last-name" placeholder="type your user name..">
+        
+        <label for="email">Email Address: </label>
+        <input type="email" class="form-control" name="email"  placeholder="type your email..">
 
         <label for="password">Password: </label>
         <input type="password" class="form-control" name="password" id="password" placeholder="type your user name..">
 
         <label for="password">Confirm Password: </label>
-        <input type="password" class="form-control" name="password" id="password" placeholder="type your user name..">
+        <input type="password" class="form-control" name="cont-password" id="password" placeholder="type your user name..">
 
-        <input type="submit" class="btn btn-md btn-primary btn-block mt-3" name="submit" id="submit" value="Submit">
+        <input type="submit" class="btn btn-md btn-primary btn-block mt-3" name="reg-submit" id="submit" value="Submit">
     </form>
 
 
 
-    <form action="" method="POST" id='login-form' class="forms bg-light">
+    <form action="/accounts/" method="POST" id='login-form' class="forms bg-light">
         {% csrf_token %}
+        <div class="error">
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                        <p class="text-danger text-center">{{message}}</p>
+                        <script type="text/javascript">
+                            document.getElementById('login-form').style.display='block';
+                            console.log('visible')
+                        </script>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
         <label for="username">Username: </label>
         <input type="text" class="form-control" name="username" id="username" placeholder="type your user name..">
         
         <label for="password">Password: </label>
         <input type="password" class="form-control" name="password" id="password" placeholder="type your user name..">
         
-        <input type="submit" class="btn btn-md btn-primary btn-block mt-3" name="submit" id="login-submit" value="login">
+        <input name='login-submit' type="submit" class="btn btn-md btn-primary btn-block mt-3" id="login-submit" value="login">
     </form>
+
+    <div class='container'>
+        <div class='row'>
+            <div class='col-6 text-center'>
+                {% if user.is_authenticated %}
+                    <h2>Hi,{{user}}</h2>
+                    <h4>Have a nice day!!</h4>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 
     <script type="text/javascript">
         function reg(val){
@@ -77,8 +125,6 @@
             let reg = document.getElementById('reg-form').style.display='none';
             var post = document.getElementById('login-form').style.display = val;
         }
-        
-
     </script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
