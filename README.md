@@ -1,5 +1,5 @@
 ## About
-Django authentication system is a simple tool that imlemented the basic concepts of user authentication and form validation. 
+Django authentication system is a simple tool that implemented the basic concepts of user authentication and form validation. 
 It uses the django core frameworks example as Messages, auth and login, logout, authenticate models to process the data. 
 
 ## Features
