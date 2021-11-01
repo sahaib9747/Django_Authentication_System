@@ -8,11 +8,11 @@ It uses the django core frameworks example as Messages, auth and login, logout, 
 * Authentication 
 * Logout
 
-## how to run on local machien ? 
+## how to run on local machine ? 
 to run the application, You need to configure you machine first:
 * install python 3.8.10
 * create virtualenv
-* install all of the modules from requirements.txt file
+* install all the required modules from requirements.txt file
 * setup the database
 * run the server
 * enjoy
