@@ -38,7 +38,6 @@ def home(request):
                 login(request, log_status)
             else:
                 messages.error(request, 'Wrong credentials!!')
-                print('error')
                 return redirect('/accounts/')
         elif 'logout-submit' in request.POST:
             logout(request)
